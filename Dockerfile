@@ -1,11 +1,11 @@
 # VERSION 0.4
-# AUTHOR:         Olav Grønås Gjerde <olav@backupbay.com>
-# DESCRIPTION:    Image with MoinMoin wiki, uwsgi, nginx and self signed SSL
+# AUTHOR:         Jose Zarazua <jose.zarazua@gmail.com>
+# DESCRIPTION:    Image with MoinMoin wiki, uwsgi, nginx, self signed SSL and basic HTTP auth
 # TO_BUILD:       docker build -t moinmoin .
 # TO_RUN:         docker run -it -p 80:80 -p 443:443 --name my_wiki moinmoin
 
 FROM ubuntu:trusty
-MAINTAINER Olav Grønås Gjerde <olav@backupbay.com>
+MAINTAINER Jose Zarazua <jose.zarazua@gmail.com>
 
 # Set the version you want of MoinMoin
 ENV MM_VERSION 1.9.8
@@ -16,6 +16,7 @@ RUN apt-get update -qq && apt-get -qqy upgrade
 
 # Install software
 RUN apt-get -qqy install python wget nginx uwsgi uwsgi-plugin-python rsyslog
+RUN apt-get -qqy install apache2-utils
 RUN apt-get clean
 
 # Download MoinMoin
@@ -59,6 +60,7 @@ EXPOSE 80
 EXPOSE 443
 
 CMD service rsyslog start && service nginx start && \
+  htpasswd -c /etc/nginx/.htpasswd admin && \
   uwsgi --uid www-data \
     -s /tmp/uwsgi.sock \
     --plugins python \

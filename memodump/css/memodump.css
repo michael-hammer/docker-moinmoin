@@ -43,6 +43,13 @@ html, body {
    navbar elements
 ===========================================================*/
 
+/* logo navbar fixes for docker */
+
+.navbar-brand {
+  padding: 0;
+  padding-top: 6px;
+}
+
 /* search form customization: search icon inside input area */
 input.form-search {
     padding-right: 24px;

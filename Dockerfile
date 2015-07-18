@@ -9,7 +9,7 @@ MAINTAINER Jose Zarazua <jose.zarazua@gmail.com>
 
 # Set the version you want of MoinMoin
 ENV MM_VERSION 1.9.8
-ENV MM_CSUM 4a616d12a03f51787ac996392f9279d0398bfb3b
+#ENV MM_CSUM 4a616d12a03f51787ac996392f9279d0398bfb3b
 
 # Update
 RUN apt-get update -qq && apt-get -qqy upgrade
@@ -17,13 +17,14 @@ RUN apt-get update -qq && apt-get -qqy upgrade
 # Install software
 RUN apt-get -qqy install python wget nginx uwsgi uwsgi-plugin-python rsyslog
 RUN apt-get -qqy install apache2-utils
+RUN apt-get -qqy install unzip
 RUN apt-get clean
 
 # Download MoinMoin
 RUN wget \
   https://bitbucket.org/thomaswaldmann/moin-1.9/get/$MM_VERSION.tar.gz
-RUN if [ "$MM_CSUM" != "$(shasum $MM_VERSION.tar.gz | awk '{print($1)}')" ];\
-  then exit 1; fi;
+#RUN if [ "$MM_CSUM" != "$(shasum $MM_VERSION.tar.gz | awk '{print($1)}')" ];\
+  #then exit 1; fi;
 RUN mkdir moinmoin
 RUN tar xf $MM_VERSION.tar.gz -C moinmoin --strip-components=1
 RUN rm $MM_VERSION.tar.gz
@@ -33,12 +34,20 @@ RUN cd moinmoin && python setup.py install --force --prefix=/usr/local
 ADD wikiconfig.py /usr/local/share/moin/
 RUN mkdir /usr/local/share/moin/underlay
 RUN chown -Rh www-data:www-data /usr/local/share/moin/underlay
+
+  
+
 # Because of a permission error with chown I change the user here
 USER www-data
 RUN cd /usr/local/share/moin/ && tar xf underlay.tar -C underlay --strip-components=1
 USER root
 RUN chown -R www-data:www-data /usr/local/share/moin/data
 ADD logo.png /usr/local/lib/python2.7/dist-packages/MoinMoin/web/static/htdocs/common/
+
+# Install moinmoin-memodump theme
+ADD memodump.py /usr/local/share/moin/data/plugin/theme/ 
+ADD memodump/ /usr/local/lib/python2.7/dist-packages/MoinMoin/web/static/htdocs/memodump
+RUN chown -R www-data:www-data /usr/local/share/moin/data
 
 # Configure nginx
 ADD nginx.conf /etc/nginx/

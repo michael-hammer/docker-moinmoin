@@ -1,4 +1,4 @@
-moinmoin-wiki-httpauth
+moinmoin-wiki-httpauth-memodump-theme
 =============
 
 Docker image with the Moinmoin wiki engine, uwsgi, nginx, self signed SSL, and basic http auth.

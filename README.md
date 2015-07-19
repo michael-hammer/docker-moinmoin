@@ -1,7 +1,7 @@
 docker-moinmoin-memodump
 ========================
 
-Docker image for  
+Docker image for a stupidly simple MoinMoin wiki with memodump default theme.
 
 Based on [dossist/moinmoin-wiki][moinmoin-wiki].
 

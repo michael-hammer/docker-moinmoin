@@ -9,9 +9,11 @@ MAINTAINER James Wilmot <jameswilmot2000@gmail.com>
 
 # Set the version you want of MoinMoin
 ENV MM_VERSION 1.9.8
+
+# default wiki configuration
 ENV WIKI_NAME "My personal wiki"
 ENV WIKI_ADMIN "admin"
-ENV WIKI_FRONTPAGE "home"
+ENV WIKI_FRONTPAGE "FrontPage"
 ENV WIKI_THEME "memodump"
 #ENV MM_CSUM 4a616d12a03f51787ac996392f9279d0398bfb3b
 

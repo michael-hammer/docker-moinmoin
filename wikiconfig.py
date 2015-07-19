@@ -78,7 +78,7 @@ class Config(multiconfig.DefaultConfig):
     #page_front_page = u"MyStartingPage"
 
     # b) if wiki content is maintained in many languages
-    page_front_page = u"FrontPage"
+    page_front_page = u"${WIKI_FRONTPAGE}"
 
     # The interwiki name used in interwiki links
     #interwikiname = u'UntitledWiki'
@@ -91,7 +91,7 @@ class Config(multiconfig.DefaultConfig):
 
     # This is checked by some rather critical and potentially harmful actions,
     # like despam or PackageInstaller action:
-    superuser = [u"mmAdmin", ]
+    superuser = [u"${WIKI_ADMIN}", ]
 
     # IMPORTANT: grant yourself admin rights! replace YourName with
     # your user name. See HelpOnAccessControlLists for more help.
@@ -140,7 +140,7 @@ class Config(multiconfig.DefaultConfig):
     ]
 
     # The default theme anonymous or new users get
-    theme_default = 'memodump'
+    theme_default = '${WIKI_THEME}'
 
 
     # Language options --------------------------------------------------

@@ -1,15 +1,28 @@
-moinmoin-wiki-httpauth-memodump-theme
-=============
+docker-moinmoin-memodump
+========================
 
-Docker image with the Moinmoin wiki engine, uwsgi, nginx, self signed SSL, and basic http auth.
+Docker image for  
 
-You can automatically download and run this with the following command
-    
-    sudo docker run -it -p 443:443 -p 80:80 --name my_wiki hosay/moinmoin-wiki-httpauth
-    
-Default superuser is `mmAdmin`, you activate him by creating a new Moinmoin user named `mmAdmin` and set your prefered password.
-The pages are mounted as volume, so you can take backup of the system from the host.
+Based on [dossist/moinmoin-wiki][moinmoin-wiki].
 
-Default http auth user is admin, you set the password on the prompt after docker run.
+Screenshot
+----------
 
-You can detach from the container session with `CTRL-Q+P` and then `CTRL-C`
+![Main](https://github.com/JamesWilmot/docker-moinmoin-httpauth-memodump/blob/master/screenshot.png)
+
+Build 
+-----
+
+
+Run
+---
+
+Configuration
+-------------
+
+
+License and copyrights
+----------------------
+
+[moinmoin-memodump]: https://github.com/dossist/moinmoin-memodump
+[moinmoin-wiki]: https://github.com/olavgg/moinmoin-wiki

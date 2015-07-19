@@ -1,18 +1,18 @@
-# VERSION 0.4
-# AUTHOR:         Jose Zarazua <jose.zarazua@gmail.com>
-# DESCRIPTION:    Image with MoinMoin wiki, uwsgi, nginx, self signed SSL and basic HTTP auth
-# TO_BUILD:       docker build -t moinmoin .
-# TO_RUN:         docker run -it -p 80:80 -p 443:443 --name my_wiki moinmoin
+# VERSION 0.1
+# AUTHOR:         James Wilmot <jameswilmot2000@gmail.com>
+# DESCRIPTION:    Image with MoinMoin wiki, uwsgi, nginx, self signed SSL and memodump theme
+# TO_BUILD:       docker build -t moinmoin-personalwiki .
+# TO_RUN:         docker run -it -p 80:80 -p 443:443 --name my_wiki moinmoin-personalwiki
 
 FROM ubuntu:trusty
-MAINTAINER Jose Zarazua <jose.zarazua@gmail.com>
+MAINTAINER James Wilmot <jameswilmot2000@gmail.com>
 
 # Set the version you want of MoinMoin
 ENV MM_VERSION 1.9.8
 ENV WIKI_NAME "My personal wiki"
 ENV WIKI_ADMIN "admin"
-ENV WIKI_DATA ""
 ENV WIKI_FRONTPAGE "home"
+ENV WIKI_THEME "memodump"
 #ENV MM_CSUM 4a616d12a03f51787ac996392f9279d0398bfb3b
 
 # Update

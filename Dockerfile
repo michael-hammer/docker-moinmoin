@@ -69,7 +69,7 @@ EXPOSE 80
 EXPOSE 443
 
 CMD service rsyslog start && service nginx start && \
-  htpasswd -c /etc/nginx/.htpasswd admin && \
+  # htpasswd -c /etc/nginx/.htpasswd admin && \
   uwsgi --uid www-data \
     -s /tmp/uwsgi.sock \
     --plugins python \

@@ -1,5 +1,5 @@
-docker-moinmoin-memodump
-========================
+docker-moinmoin-personalwiki
+============================
 
 Docker image for a stupidly simple MoinMoin wiki with memodump default theme.
 
@@ -13,9 +13,19 @@ Screenshot
 Build 
 -----
 
+```console
+git@github.com:JamesWilmot/docker-moinmoin-memodump.git
+cd docker-moinmoin-memodump
+docker build -t moinmoin-memodump .
+```
 
 Run
 ---
+
+```console
+docker run -it -p 443:443 -p 80:80 --name "personal_wiki" moinmoin-memodump 
+```
+
 
 Configuration
 -------------

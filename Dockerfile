@@ -9,6 +9,10 @@ MAINTAINER Jose Zarazua <jose.zarazua@gmail.com>
 
 # Set the version you want of MoinMoin
 ENV MM_VERSION 1.9.8
+ENV WIKI_NAME "My personal wiki"
+ENV WIKI_ADMIN "admin"
+ENV WIKI_DATA ""
+ENV WIKI_FRONTPAGE "home"
 #ENV MM_CSUM 4a616d12a03f51787ac996392f9279d0398bfb3b
 
 # Update
@@ -17,8 +21,12 @@ RUN apt-get update -qq && apt-get -qqy upgrade
 # Install software
 RUN apt-get -qqy install python wget nginx uwsgi uwsgi-plugin-python rsyslog
 RUN apt-get -qqy install apache2-utils
-RUN apt-get -qqy install unzip
+RUN apt-get -qqy install sed
 RUN apt-get clean
+
+
+# add init script
+ADD init_script.sh /usr/local/bin/
 
 # Download MoinMoin
 RUN wget \
@@ -34,8 +42,6 @@ RUN cd moinmoin && python setup.py install --force --prefix=/usr/local
 ADD wikiconfig.py /usr/local/share/moin/
 RUN mkdir /usr/local/share/moin/underlay
 RUN chown -Rh www-data:www-data /usr/local/share/moin/underlay
-
-  
 
 # Because of a permission error with chown I change the user here
 USER www-data
@@ -68,8 +74,8 @@ VOLUME /usr/local/share/moin/data
 EXPOSE 80
 EXPOSE 443
 
-CMD service rsyslog start && service nginx start && \
-  # htpasswd -c /etc/nginx/.htpasswd admin && \
+CMD bash -C '/usr/local/bin/init_script.sh'; \
+  service rsyslog start && service nginx start && \
   uwsgi --uid www-data \
     -s /tmp/uwsgi.sock \
     --plugins python \

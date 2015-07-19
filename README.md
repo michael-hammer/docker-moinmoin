@@ -27,9 +27,7 @@ License and copyrights
 This docker image is licensed under [GNU GPL][].  
 
 [moinmoin-memodump][] is copyrighted by [dossist][] and licenced under [GNU GPL][].
-[Twitter Bootstrap][] is copyrighted by Twitter, Inc and licensed under [the MIT license][MIT].  
 [MoinMoin][] is copyrighted by [The MoinMoin development team](https://moinmo.in/MoinCoreTeamGroup) and licensed under [GNU GPL][].  
-Icons and some part of CSS were taken from the default modernized theme.  
 
 [moinmoin-memodump]: https://github.com/dossist/moinmoin-memodump
 [moinmoin-wiki]: https://github.com/olavgg/moinmoin-wiki

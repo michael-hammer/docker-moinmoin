@@ -3,12 +3,7 @@ docker-moinmoin-personalwiki
 
 Docker image for a simple MoinMoin wiki with memodump default theme.
 
-Based on [dossist/moinmoin-wiki][moinmoin-wiki].
-
-Screenshot
-----------
-
-![Main](https://github.com/JamesWilmot/docker-moinmoin-httpauth-memodump/blob/master/screenshot.png)
+Based on [JamesWilmot/docker-moinmoin-personalwiki][moinmoin-wiki] (which was forked from [dossist/moinmoin-wiki][moinmoin-wiki]).
 
 
 Quickstart
@@ -22,10 +17,10 @@ Build
 -----
 
 ```console
-git@github.com:JamesWilmot/docker-moinmoin-personalwiki.git
-cd docker-moinmoin-personalwiki
-docker build -t moinmoin-personalwiki .
-docker run -it -p 443:443 -p 80:80 --name "personal_wiki" -e WIKI_NAME="My personal wiki" moinmoin-personalwiki
+git@github.com:michael-hammer/docker-moinmoin
+cd docker-moinmoin
+docker build -t moinmoin .
+docker run -it -p $HOST_HTTPS_PORT:443 -p $HOST_HTTP_PORT:80 --name "personal_wiki" -e WIKI_NAME="My personal wiki" moinmoin-personalwiki
 ```
 
 Configuration

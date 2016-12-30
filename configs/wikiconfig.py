@@ -70,15 +70,16 @@ class Config(multiconfig.DefaultConfig):
     # Wiki logo. You can use an image, text or both. [Unicode]
     # For no logo or text, use '' - the default is to show the sitename.
     # See also url_prefix setting below!
-    logo_string = u'<img src="%s/common/logo.png" alt="Logo">' % url_prefix_static
+    #logo_string = u'<img src="%s/common/logo.png" alt="Logo">' % url_prefix_static
+    logo_string = ''
 
     # name of entry page / front page [Unicode], choose one of those:
 
     # a) if most wiki content is in a single language
-    #page_front_page = u"MyStartingPage"
+    page_front_page = u"MyStartingPage"
 
     # b) if wiki content is maintained in many languages
-    page_front_page = u"${WIKI_FRONTPAGE}"
+    #page_front_page = u"FrontPage"
 
     # The interwiki name used in interwiki links
     #interwikiname = u'UntitledWiki'
@@ -91,12 +92,13 @@ class Config(multiconfig.DefaultConfig):
 
     # This is checked by some rather critical and potentially harmful actions,
     # like despam or PackageInstaller action:
-    superuser = [u"${WIKI_ADMIN}", ]
+    superuser = [u'${WIKI_ADMIN}', ]
 
     # IMPORTANT: grant yourself admin rights! replace YourName with
     # your user name. See HelpOnAccessControlLists for more help.
     # All acl_rights_xxx options must use unicode [Unicode]
-    #acl_rights_before = u"YourName:read,write,delete,revert,admin"
+    acl_rights_before = u"${WIKI_ADMIN}:read,write,delete,revert,admin"
+    acl_rights_default = u"Known:read,write,delete,revert All:read"
 
     # The default (ENABLED) password_checker will keep users from choosing too
     # short or too easy passwords. If you don't like this and your site has
@@ -140,8 +142,7 @@ class Config(multiconfig.DefaultConfig):
     ]
 
     # The default theme anonymous or new users get
-    theme_default = '${WIKI_THEME}'
-
+    theme_default = 'memodump'
 
     # Language options --------------------------------------------------
 
@@ -149,7 +150,9 @@ class Config(multiconfig.DefaultConfig):
     # YOUR language that other people contributed.
 
     # The main wiki language, set the direction of the wiki pages
-    language_default = 'en'
+    # language_default = 'en'
+    language_ignore_browser = True
+    available_languages = 'en'
 
     # the following regexes should match the complete name when used in free text
     # the group 'all' shall match all, while the group 'key' shall match the key only
@@ -169,4 +172,29 @@ class Config(multiconfig.DefaultConfig):
     # Enable graphical charts, requires gdchart.
     #chart_options = {'width': 600, 'height': 300}
 
+    from MoinMoin.auth.ldap_login import LDAPAuth
+    ldap_authenticator1 = LDAPAuth(
+        server_uri='ldap://172.17.0.1',
+        base_dn='ou=People,dc=derhammer,dc=net',
+        scope=2, # scope of the search we do (2 == ldap.SCOPE_SUBTREE)
+        referrals=0, # LDAP REFERRALS (0 needed for AD)
+        search_filter='(uid=%(username)s)',
+        givenname_attribute='givenName', # often 'givenName' - ldap attribute we get the first name from
+        surname_attribute='sn', # often 'sn' - ldap attribute we get the family name from
+        aliasname_attribute='displayName', # often 'displayName' - ldap attribute we get the aliasname from
+        email_attribute='mail', # often 'mail' - ldap attribute we get the email address from
+        coding='utf-8', # coding used for ldap queries and result values
+        timeout=10, # how long we wait for the ldap server [s]
+        start_tls=0, # usage of Transport Layer Security 0 = No, 1 = Try, 2 = Required
+        tls_require_cert=0, # 0 == ldap.OPT_X_TLS_NEVER (needed for self-signed certs)
+        bind_once=False, # set to True to only do one bind - useful if configured to bind as the user on the first attempt,
+        autocreate=True
+    )
 
+    auth = [ldap_authenticator1, ] # this is a list, you may have multiple ldap authenticators
+                                   # as well as other authenticators
+
+    cookie_lifetime = 1 # 1 hour after last access ldap login is required again
+    user_autocreate = True
+
+    surge_action_limits = None

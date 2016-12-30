@@ -10,7 +10,7 @@ Quickstart
 ----------
 
 ```console
-docker run -it -p 443:443 -p 80:80 --name "personal_wiki" -e WIKI_NAME="My personal wiki" jameswilmot/moinmoin-personalwiki
+docker run -it -p $HOST_HTTPS_PORT::443 -p $HOST_HTTP_PORT:80 --name "personal_wiki" -e WIKI_NAME="My personal wiki" jameswilmot/moinmoin-personalwiki
 ```
 
 Build 
@@ -22,10 +22,6 @@ cd docker-moinmoin
 docker build -t moinmoin .
 docker run -it -p $HOST_HTTPS_PORT:443 -p $HOST_HTTP_PORT:80 --name "personal_wiki" -e WIKI_NAME="My personal wiki" moinmoin-personalwiki
 ```
-
-Configuration
--------------
-
 
 License and copyrights
 ----------------------
